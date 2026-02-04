@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Clear loading message
       activitiesList.innerHTML = "";
 
+      // Reset activity select to avoid duplicate options on re-fetch
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
+
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
@@ -20,11 +23,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // Build participants HTML: show up to 6 chips, then a +N more badge
+        const participants = details.participants || [];
+        let participantsHtml = '';
+        if (participants.length === 0) {
+          participantsHtml = `<p class="no-participants">No participants yet</p>`;
+        } else {
+          const visible = participants.slice(0, 6);
+          const chips = visible.map(p => `<span class="participant-chip" title="${p}">${p}</span>`).join('');
+          const more = participants.length > 6 ? `<span class="participant-more">+${participants.length - 6}</span>` : '';
+          participantsHtml = `<div class="participants"><div class="participants-list">${chips}</div>${more}</div>`;
+        }
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          ${participantsHtml}
         `;
 
         activitiesList.appendChild(activityCard);
