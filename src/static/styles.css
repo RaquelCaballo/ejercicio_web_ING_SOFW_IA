@@ -108,6 +108,38 @@ section h3 {
   transition: transform 0.12s;
 }
 
+.participant-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.participant-name {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
+}
+
+.remove-btn:hover {
+  background: #c0392b;
+}
+
 .participant-more {
   background: #1a237e;
   color: #fff;
